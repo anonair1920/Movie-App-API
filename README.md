@@ -1,3 +1,15 @@
+## Required Features 🎯
+* [ ] The user can see the top 20 "Currently Playing" movies on a page.
+* [ ] For each movie, the user can see the Movie Title, Year, Rating, and Poster.
+* [ ] The user can see this information clearly on devices of various screen sizes.
+* [ ] The user can see "more" movies by tapping a "See More" button at the bottom.
+
+## Rockets 🚀
+* [ ] The user can enter a term into a search box to filter the currently loaded movies by search term. E.g.; the user can type "mar" and the results are reduced to show "Captain Marvel".
+* [ ] The user can change the "source" from "Currently Playing" movies to "Top Rated" movies (or any other of the endpoints supplied by MovieDB).
+* [ ] Sort by Rating and Popularity (from Lowest to Highest and Vice Versa)
+* [ ] Have Year, Rating as a slider. Change the display dynamically when the slider is changed. You could use React Input Range package for this task. 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
