@@ -1,6 +1,6 @@
 ## Required Features 🎯
-* [ ] The user can see the top 20 "Currently Playing" movies on a page.
-* [ ] For each movie, the user can see the Movie Title, Year, Rating, and Poster.
+* [x] The user can see the top 20 "Currently Playing" movies on a page.
+* [x] For each movie, the user can see the Movie Title, Year, Rating, and Poster.
 * [ ] The user can see this information clearly on devices of various screen sizes.
 * [ ] The user can see "more" movies by tapping a "See More" button at the bottom.
 
