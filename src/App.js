@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, FormControl, Pagination } from "react-bootstrap";
+import { Form, Button, FormControl } from "react-bootstrap";
 import MovieList from "./components/MovieList";
+import PagiBox from "./components/PagiBox";
 import "./App.css";
 
 const apiKey = process.env.REACT_APP_APIKEY;
@@ -52,6 +53,21 @@ export default function App() {
     console.log("latest movies data: ", result.results);
   };
 
+  const nextPage = () => {
+    page++;
+    getNowPlaying();
+    setMovieList(movieList);
+  };
+
+  const previousPage = () => {
+    if (page === 1) {
+      alert("you're at first page!!");
+      getNowPlaying();
+      setMovieList(movieList);
+    } else page--;
+    getNowPlaying();
+    setMovieList(movieList);
+  };
   const searchByKeyword = (e) => {
     let newList = [];
     searchContents = e.target.value;
@@ -64,12 +80,6 @@ export default function App() {
       });
     }
     setMovieList(newList);
-  };
-
-  let changePage = () => {
-    page++;
-    getNowPlaying();
-    setMovieList(movieList);
   };
 
   useEffect(() => {
@@ -120,29 +130,26 @@ export default function App() {
           <Button variant="outline-danger">Search</Button>
         </Form>
       </div>
-
       <div className="listRow">
         <MovieList genresListApp={genreList} movieList={movieList} />
       </div>
-      <div className="pagiBox">
-        <Pagination
+      <div className="pagiBox d-flex justify-content-evenly">
+        <Button
           onClick={() => {
-            changePage();
+            previousPage();
           }}
+          variant="outline-danger"
         >
-          <Pagination.First />
-          <Pagination.Prev />
-          <Pagination.Item active>{1}</Pagination.Item>
-          <Pagination.Item>{2}</Pagination.Item>
-          <Pagination.Item>{3}</Pagination.Item>
-          <Pagination.Item>{4}</Pagination.Item>
-          <Pagination.Item>{5}</Pagination.Item>
-          <Pagination.Item>{6}</Pagination.Item>
-          <Pagination.Ellipsis />
-          <Pagination.Item>{20}</Pagination.Item>
-          <Pagination.Next />
-          <Pagination.Last />
-        </Pagination>
+          Previous Page
+        </Button>
+        <Button
+          onClick={() => {
+            nextPage();
+          }}
+          variant="outline-danger"
+        >
+          Next Page
+        </Button>
       </div>
     </div>
   );
