@@ -12,9 +12,9 @@ export default function MovieList(props) {
   }
   return (
     <div>
-      <div className="row">
+      <div className="row m-0 p-0 d-flex justify-content-center">
         {props.movieList.map((item) => {
-          return <MovieCard movie={item} />;
+          return <MovieCard movie={item} genreListMovieList={props.genresListApp} />;
         })}
       </div>
     </div>

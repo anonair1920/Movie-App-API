@@ -1,46 +1,59 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, FormControl, ListGroup } from "react-bootstrap";
+import { Form, Button, FormControl, Pagination } from "react-bootstrap";
 import MovieList from "./components/MovieList";
 import "./App.css";
 
 const apiKey = process.env.REACT_APP_APIKEY;
+let page = 1;
 
 export default function App() {
   let searchContents = "";
   let [movieList, setMovieList] = useState(null);
+  let [genreList, setGenreList] = useState(null);
+
+  const getGenreList = async () => {
+    const url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`;
+    let data = await fetch(url);
+    let result = await data.json();
+    getNowPlaying();
+    console.log("genre list: ", result.genres);
+    setGenreList(result.genres);
+  };
 
   const getNowPlaying = async () => {
-    let url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1`;
+    let url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=${page}`;
     let data = await fetch(url);
     let result = await data.json();
     setMovieList(result.results);
-    console.log("data from api", result);
+    console.log("now playing movies: ", result);
   };
 
   const searchByKeyword = (e) => {
     let newList = [];
     searchContents = e.target.value;
     console.log("user typing: ", searchContents);
-    if (searchContents === "") {
+    if (searchContents == "") {
       setMovieList(movieList);
     } else {
-     newList = movieList.filter(movie => {
+      newList = movieList.filter((movie) => {
         movie.title.toLowerCase().includes(searchContents.toLowerCase());
-      })
+      });
     }
     setMovieList(newList);
   };
 
-  useEffect(() => {
+  let changePage = () => {
+    page++;
     getNowPlaying();
+    setMovieList(movieList);
+  };
+
+  useEffect(() => {
+    getGenreList();
   }, []);
 
-  if (movieList === null) {
-    return (
-      <div>
-        <h1>Loading...!</h1>
-      </div>
-    );
+  if (genreList === null || movieList === null) {
+    return <h1>l o a d i n g . . . !</h1>;
   }
 
   return (
@@ -52,12 +65,27 @@ export default function App() {
           placeholder="Search"
           className="mr-sm-2"
         />
-        <Button variant="outline-success">Search</Button>
+        <Button variant="outline-danger">Search</Button>
       </Form>
-      <div className="container">
-        <MovieList  movieList={movieList} />
+      <div className="listRow">
+        <MovieList genresListApp={genreList} movieList={movieList} />
       </div>
-      <button>next page</button>
+      <div className='pagiBox'>
+        <Pagination onClick={()=>{changePage()}}>
+          <Pagination.First />
+          <Pagination.Prev />
+          <Pagination.Item active>{1}</Pagination.Item>
+          <Pagination.Item>{2}</Pagination.Item>
+          <Pagination.Item>{3}</Pagination.Item>
+          <Pagination.Item>{4}</Pagination.Item>
+          <Pagination.Item>{5}</Pagination.Item>
+          <Pagination.Item>{6}</Pagination.Item>
+          <Pagination.Ellipsis />
+          <Pagination.Item>{20}</Pagination.Item>
+          <Pagination.Next />
+          <Pagination.Last />
+        </Pagination>
+      </div>
     </div>
   );
 }

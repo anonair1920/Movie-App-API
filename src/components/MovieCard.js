@@ -1,17 +1,44 @@
 import React from "react";
-import { Card, Button, ListGroupItem, ListGroup } from "react-bootstrap";
+import { Card, Button, ListGroupItem, ListGroup, Badge } from "react-bootstrap";
 
 export default function MovieCard(props) {
   let movie = props.movie;
+  let genres = props.genreListMovieList;
   return (
-    <div className='col-3'>
-      <Card className="container" style={{ width: "18rem" }}>
+    <div className="">
+      <Card className="mt-5 container imgSize titleLine">
         <Card.Img
+          className="hoverImg"
           variant="top"
+          rn
           src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`}
         />
+
+        <Card.ImgOverlay className="hiddenContent">
+        <Card.Title >{movie.title}</Card.Title>
+          <Card.Title>
+            {movie.genre_ids.map((id) => {
+              let test = genres.find((genre) => {
+                return id === genre.id;
+              }).name;
+              console.log("test", test);
+              return <Badge variant="danger">{test}</Badge>;
+            })}
+          </Card.Title>
+          <Card.Text data-spy="scroll">{movie.overview}</Card.Text>
+        </Card.ImgOverlay>
+
+        <Card.Body className='cardbody'>
+          <Card.Title >{movie.title}</Card.Title>
+        </Card.Body>
+      </Card>
+      {/* <Card style={{ width: "18rem" }}>
+        <Card.Img
+          variant="top"
+          src=
+        />
         <Card.Body>
-          <Card.Title>{movie.title}</Card.Title>
+          <Card.Title></Card.Title>
           <Card.Text>
             <i className="fas fa-star"></i>
             {movie.vote_average}
@@ -26,7 +53,7 @@ export default function MovieCard(props) {
           <Button variant="primary">Go somewhere</Button>
           <Card.Link href="#">Another Link</Card.Link>
         </Card.Body>
-      </Card>
+      </Card> */}
     </div>
   );
 }

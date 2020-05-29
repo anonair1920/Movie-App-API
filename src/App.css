@@ -13,7 +13,6 @@
   }
 }
 
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -25,5 +24,48 @@
 
 body {
   height: 100%;
-  background-color: white;
+  background-color: black;
 }
+
+.imgSize {
+  max-width: 269.8px;
+  min-height: 480px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+}
+
+.imgSize:hover .hiddenContent {
+  opacity: 1;
+}
+.imgSize:hover .hoverImg{
+  opacity: 0.1;
+}
+.imgSize:hover .imgSize {
+  opacity: 0.1;
+}
+.imgSize:hover .cardbody{
+  opacity: 0;
+}
+.hiddenContent {
+  opacity: 0;
+  display: inline-block;
+  align-items: center ;
+}
+
+.listRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Pagination{
+  background-color: black;
+  color: whitesmoke;
+  border: 1px solid white;
+}
+.pagiBox{
+  display: flex;
+  justify-content: center;
+}
+
