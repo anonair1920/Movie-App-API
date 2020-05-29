@@ -16,7 +16,7 @@ export default function App() {
     let data = await fetch(url);
     let result = await data.json();
     getNowPlaying();
-    console.log("genre list: ", result.genres);
+    console.log("genre list data: ", result.genres);
     setGenreList(result.genres);
   };
 
@@ -25,7 +25,31 @@ export default function App() {
     let data = await fetch(url);
     let result = await data.json();
     setMovieList(result.results);
-    console.log("now playing movies: ", result);
+    console.log("now playing movies data: ", result.results);
+  };
+
+  const getTopRated = async () => {
+    let url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=en-US&page=${page}`;
+    let data = await fetch(url);
+    let result = await data.json();
+    setMovieList(result.results);
+    console.log("top rated movies data: ", result.results);
+  };
+
+  const getUpComing = async () => {
+    let url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=en-US&page=${page}`;
+    let data = await fetch(url);
+    let result = await data.json();
+    setMovieList(result.results);
+    console.log("up coming movies data: ", result.results);
+  };
+
+  const getPopular = async () => {
+    let url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=${page}`;
+    let data = await fetch(url);
+    let result = await data.json();
+    setMovieList(result.results);
+    console.log("latest movies data: ", result.results);
   };
 
   const searchByKeyword = (e) => {
@@ -58,20 +82,54 @@ export default function App() {
 
   return (
     <div>
-      <Form inline>
-        <FormControl
-          onChange={(e) => searchByKeyword(e)}
-          type="text"
-          placeholder="Search"
-          className="mr-sm-2"
-        />
-        <Button variant="outline-danger">Search</Button>
-      </Form>
+      <div className="d-flex justify-content-between">
+        <Button disabled variant="danger">
+          One More EPISODE{" "}
+        </Button>{" "}
+        <Button
+          onClick={() => {
+            getTopRated();
+          }}
+          variant="outline-danger"
+        >
+          Top Rated
+        </Button>{" "}
+        <Button
+          onClick={() => {
+            getPopular();
+          }}
+          variant="outline-danger"
+        >
+          Popular
+        </Button>{" "}
+        <Button
+          onClick={() => {
+            getUpComing();
+          }}
+          variant="outline-danger"
+        >
+          Up Coming
+        </Button>
+        <Form inline>
+          <FormControl
+            onChange={(e) => searchByKeyword(e)}
+            type="text"
+            placeholder="Search"
+            className="mr-sm-2"
+          />
+          <Button variant="outline-danger">Search</Button>
+        </Form>
+      </div>
+
       <div className="listRow">
         <MovieList genresListApp={genreList} movieList={movieList} />
       </div>
-      <div className='pagiBox'>
-        <Pagination onClick={()=>{changePage()}}>
+      <div className="pagiBox">
+        <Pagination
+          onClick={() => {
+            changePage();
+          }}
+        >
           <Pagination.First />
           <Pagination.Prev />
           <Pagination.Item active>{1}</Pagination.Item>

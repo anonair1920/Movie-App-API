@@ -21,7 +21,7 @@ export default function MovieCard(props) {
               let test = genres.find((genre) => {
                 return id === genre.id;
               }).name;
-              console.log("test", test);
+              // console.log("test", test);
               return <Badge variant="danger">{test}</Badge>;
             })}
           </Card.Title>
