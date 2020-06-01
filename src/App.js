@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import ReactModal from "react-modal";
+import YouTube from "@u-wave/react-youtube";
 import "./App.css";
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
     setMovieList(result.results);
     setTotalResult(result.total_results);
     console.log("now playing movies data: ", result.results);
+    // console.log("find this", result)
   };
 
   const getTopRated = async () => {
@@ -66,6 +68,18 @@ export default function App() {
     let data = await fetch(url);
     let result = await data.json();
     setMovieList(result.results);
+  };
+
+  const highRated = () => {
+    const sortedArr = movieList.sort((a, b) => b.vote_average - a.vote_average);
+    setMovieList([...sortedArr]);
+    console.log(sortedArr);
+    console.log("show me rates");
+  };
+
+  const lowRated = () => {
+    const sortedArr = movieList.sort((a, b) => a.vote_average - b.vote_average);
+    setMovieList([...sortedArr]);
   };
 
   const closeModal = () => {
@@ -130,7 +144,7 @@ export default function App() {
               </NavIcon>
               <NavText>One More EPISODE</NavText>
             </NavItem>
-            <NavItem eventKey="charts">
+            <NavItem eventKey="upComing">
               <NavIcon>
                 <i
                   className="fa fa-fw fa-line-chart"
@@ -145,7 +159,7 @@ export default function App() {
                 Up Coming{" "}
               </NavText>
             </NavItem>{" "}
-            <NavItem eventKey="charts">
+            <NavItem eventKey="topRated">
               <NavIcon>
                 <i
                   className="fa fa-fw fa-line-chart"
@@ -159,8 +173,27 @@ export default function App() {
               >
                 Top Rated
               </NavText>
+              <NavItem eventKey="highRated">
+                {" "}
+                <NavText
+                  onClick={() => {
+                    highRated();
+                  }}
+                >
+                  High Rated
+                </NavText>
+              </NavItem>
+              <NavItem eventKey="lowRated">
+                <NavText
+                  onClick={() => {
+                    lowRated();
+                  }}
+                >
+                  Low Rated
+                </NavText>{" "}
+              </NavItem>
             </NavItem>
-            <NavItem eventKey="charts">
+            <NavItem eventKey="highRated">
               <NavIcon>
                 <i
                   className="fa fa-fw fa-line-chart"
@@ -174,10 +207,42 @@ export default function App() {
               >
                 Popular{" "}
               </NavText>
-              <NavItem eventKey="charts/linechart"></NavItem>
-              <NavItem eventKey="charts/barchart">
-                <NavText></NavText>
+              <NavItem eventKey="charts/linechart">
+                {" "}
+                <NavText
+                  onClick={() => {
+                    getPopular();
+                  }}
+                >
+                  Most Popular
+                </NavText>
               </NavItem>
+              <NavItem eventKey="charts/linechart">
+                {" "}
+                <NavText
+                  onClick={() => {
+                    getPopular();
+                  }}
+                >
+                  Least Popular
+                </NavText>
+              </NavItem>
+            </NavItem>
+            <NavItem eventKey="highRated">
+              <NavIcon>
+                <i
+                  className="fa fa-fw fa-line-chart"
+                  style={{ fontSize: "0.5em" }}
+                />
+              </NavIcon>
+              <NavText
+                onClick={() => {
+                  getPopular();
+                }}
+              >
+                Category{" "}
+              </NavText>
+              <NavItem></NavItem>
             </NavItem>
           </SideNav.Nav>
         </SideNav>
@@ -218,16 +283,44 @@ export default function App() {
             movieList={movieList}
           />
         </div>
-        <ReactModal isOpen={modalOpen}>
+        <ReactModal
+          className="ml-5"
+          style={{
+            overlay: {
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "black",
+            },
+            content: {
+              position: "absolute",
+              top: "40px",
+              left: "40px",
+              right: "40px",
+              bottom: "0px",
+              border: "1px solid #000",
+              background: "#000",
+              overflow: "auto",
+              WebkitOverflowScrolling: "touch",
+              borderRadius: "4px",
+              outline: "none",
+              padding: "0px",
+            },
+          }}
+          isOpen={modalOpen}
+        >
+          <YouTube width="100%" height="85%" video="x2to0hs" autoplay />
           <Button
-            varient="outline-danger"
+            className="float-right"
+            variant="outline-danger"
             onClick={() => {
               closeModal();
             }}
           >
-            X
+            x
           </Button>
-          Good morning Modal
         </ReactModal>
         <div className="paginationLine">
           <Pagination

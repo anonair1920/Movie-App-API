@@ -1,9 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import { Card, Badge, Button } from "react-bootstrap";
 
 export default function MovieCard(props) {
   let movie = props.movie;
   let genres = props.genreListMovieList;
+  let [discriptionOpen, setDiscriptionOpen] = useState(false);
+  const showDiscription = () => {};
   return (
     <div className="">
       <Card className="mt-5 container imgSize titleLine">
@@ -15,22 +17,41 @@ export default function MovieCard(props) {
         />
 
         <Card.ImgOverlay className="hiddenContent">
-        <Card.Title >{movie.title}</Card.Title>
-          <Card.Title>
+          
+        <Card.Title>{movie.title}</Card.Title>
+
+        <Card.Text>
             {movie.genre_ids.map((id) => {
               let test = genres.find((genre) => {
                 return id === genre.id;
               }).name;
               // console.log("test", test);
-              return <Badge variant="danger">{test}</Badge>;
+              return <Badge className='mr-2' variant="danger">{test}</Badge>;
             })}
-          </Card.Title>
-          <Card.Text data-spy="scroll">{movie.overview}</Card.Text>
+          </Card.Text>
+        
+          {/* <Card.Text data-spy="scroll">{movie.overview}</Card.Text> */}
         </Card.ImgOverlay>
 
-        <Card.Body className='cardbody'>
-          <Card.Title >{movie.title}</Card.Title>
-          <Button onClick={()=>{props.openModal()}}>Trailer</Button>
+        <Card.Body>
+     
+          {/* <Card.Title className="cardbody">{movie.title}</Card.Title> */}
+          <Button
+          className='float-left'
+            onClick={() => {
+              props.openModal();
+            }}
+            variant="outline-danger"
+          >
+            Trailer
+          </Button>
+          <Button
+          className='float-right'
+            variant="outline-danger"
+            onClick={() => {
+              showDiscription();
+            }}
+          >Discription</Button>
         </Card.Body>
       </Card>
       {/* <Card style={{ width: "18rem" }}>
