@@ -1,11 +1,38 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Card, Badge, Button } from "react-bootstrap";
+import ReactModal from "react-modal";
+import YouTube from "@u-wave/react-youtube";
+import Rating from "@material-ui/lab/Rating";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+const apiKey = process.env.REACT_APP_APIKEY;
 
 export default function MovieCard(props) {
   let movie = props.movie;
   let genres = props.genreListMovieList;
   let [discriptionOpen, setDiscriptionOpen] = useState(false);
+  let [modalOpen, setModalOpen] = useState(false);
+  let [id, setId] = useState(null);
+
+
   const showDiscription = () => {};
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const openModal = (idd) => {
+    setModalOpen(true);
+    const getVideo = async () => {
+      const url = `https://api.themoviedb.org/3/movie/${idd}/videos?api_key=${apiKey}&language=en-US`;
+      let data = await fetch(url);
+      let result = await data.json();
+      console.log("I wanna p", result.results[0].key);
+      setId(result.results[0].key);
+    };
+    getVideo();
+  };
+
   return (
     <div className="">
       <Card className="mt-5 container imgSize titleLine">
@@ -17,65 +44,106 @@ export default function MovieCard(props) {
         />
 
         <Card.ImgOverlay className="hiddenContent">
-          
-        <Card.Title>{movie.title}</Card.Title>
+          <Card.Title className="font-weight-bolder">{movie.title}</Card.Title>
 
-        <Card.Text>
+          <Card.Text className="font-weight-lighter">
             {movie.genre_ids.map((id) => {
               let test = genres.find((genre) => {
                 return id === genre.id;
               }).name;
               // console.log("test", test);
-              return <Badge className='mr-2' variant="danger">{test}</Badge>;
+              return (
+                <Badge className="mr-2" variant="danger">
+                  {test}
+                </Badge>
+              );
             })}
           </Card.Text>
-        
-          {/* <Card.Text data-spy="scroll">{movie.overview}</Card.Text> */}
+
+          <Card.Text data-spy="scroll">
+            {movie.vote_average}{" "}
+            <Box component="fieldset" mb={3} borderColor="transparent">
+              <Typography component="legend">Read only</Typography>
+              <Rating
+                name="read-only"
+                value={movie.vote_average / 2}
+                readOnly
+              />
+            </Box>
+          </Card.Text>
         </Card.ImgOverlay>
 
         <Card.Body>
-     
           {/* <Card.Title className="cardbody">{movie.title}</Card.Title> */}
           <Button
-          className='float-left'
+            className="float-left"
             onClick={() => {
-              props.openModal();
+              openModal(movie.id);
             }}
             variant="outline-danger"
           >
             Trailer
           </Button>
           <Button
-          className='float-right'
+            className="float-right"
             variant="outline-danger"
             onClick={() => {
               showDiscription();
             }}
-          >Discription</Button>
+          >
+            Discription
+          </Button>
         </Card.Body>
       </Card>
-      {/* <Card style={{ width: "18rem" }}>
-        <Card.Img
-          variant="top"
-          src=
-        />
-        <Card.Body>
-          <Card.Title></Card.Title>
-          <Card.Text>
-            <i className="fas fa-star"></i>
-            {movie.vote_average}
-          </Card.Text>
-        </Card.Body>
-        <ListGroup className="list-group-flush">
-          <ListGroupItem>{movie.release_date}</ListGroupItem>
-          <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-          <ListGroupItem>Vestibulum at eros</ListGroupItem>
-        </ListGroup>
-        <Card.Body className="d-flex justify-content-evenly">
-          <Button variant="primary">Go somewhere</Button>
-          <Card.Link href="#">Another Link</Card.Link>
-        </Card.Body>
-      </Card> */}
+      <ReactModal
+        className="ml-5"
+        style={{
+          overlay: {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "black",
+          },
+          content: {
+            position: "absolute",
+            top: "85px",
+            left: "45px",
+            right: "30px",
+            bottom: "0px",
+            border: "1px solid #000",
+            background: "#000",
+            overflow: "auto",
+            WebkitOverflowScrolling: "touch",
+            borderRadius: "4px",
+            outline: "none",
+            padding: "0px",
+          },
+        }}
+        isOpen={modalOpen}
+      >
+        <YouTube width="100%" height="85%" video={id} autoplay />
+
+        <Button
+          className="float-right"
+          variant="outline-danger"
+          onClick={() => {
+            closeModal();
+          }}
+        >
+          x
+        </Button>
+        <Button
+          className="float-right"
+          variant="outline-danger"
+          onClick={() => {
+            console.log("let's watch movies");
+          }}
+        >
+          Watch
+        </Button>
+      </ReactModal>
     </div>
   );
 }

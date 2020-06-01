@@ -6,9 +6,9 @@
 
 * [x] App clone from a classmates Github.
 * [x] App implements a modal.
-* [ ] User sees if they click on a movie's image a trailer appears.
-* [ ] User sees if they click on the modal when a trailer i showing, the modal disappears.
-* [ ] User sees the correct modal for the movie they clicked on.
+* [x] User sees if they click on a movie's image a trailer appears.
+* [ ] User sees if they click on the modal when a trailer is showing, the modal disappears.
+* [x] User sees the correct modal for the movie they clicked on.
 
 ## Rockets 🚀
 * [X] The user can enter a term into a search box to filter the currently loaded movies by search term. E.g.; the user can type "mar" and the results are reduced to show "Captain Marvel".

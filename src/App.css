@@ -37,6 +37,7 @@ body {
 }
 
 .imgSize:hover .hiddenContent {
+  pointer-events: none;
   opacity: 1;
 }
 .imgSize:hover .hoverImg {
@@ -70,20 +71,25 @@ body {
   color: white;
   border-style: none;
 }
+
 .pagination > li {
   background-color: black;
   color: white;
   border-style: none;
 }
-/* .pagination > li > a:focus,
-.pagination > li > a:hover,
-.pagination > li > span:focus
-.pagination > li > span:hover
- {
-  color: white;
-  background-color: pink;
-  border-style: none;
-} */
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 1500ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+  opacity: 0;
+}
 
 .sideBar {
   position: fixed;

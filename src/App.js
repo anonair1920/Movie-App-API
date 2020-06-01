@@ -4,8 +4,7 @@ import MovieList from "./components/MovieList";
 import Pagination from "react-js-pagination";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
-import ReactModal from "react-modal";
-import YouTube from "@u-wave/react-youtube";
+import InputRange from "react-input-range";
 import "./App.css";
 
 export default function App() {
@@ -15,7 +14,9 @@ export default function App() {
   let [genreList, setGenreList] = useState(null);
   let [totalResult, setTotalResult] = useState(0);
   let [page, setPage] = useState(1);
-  let [modalOpen, setModalOpen] = useState(false);
+  let [value, setValue] = useState(2);
+  let [allMovie, setAllMovie] = useState(null);
+
   const getGenreList = async () => {
     const url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`;
     let data = await fetch(url);
@@ -32,6 +33,7 @@ export default function App() {
     console.log("we have ", result.total_results, "movies");
     setMovieList(result.results);
     setTotalResult(result.total_results);
+    setAllMovie(result);
     console.log("now playing movies data: ", result.results);
     // console.log("find this", result)
   };
@@ -82,40 +84,20 @@ export default function App() {
     setMovieList([...sortedArr]);
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  // const nextPage = () => {
-  //   page++;
-  //   getNowPlaying();
-  //   setMovieList(movieList);
-  // };
-
-  // const previousPage = () => {
-  //   if (page === 1) {
-  //     alert("you're at first page!!");
-  //     getNowPlaying();
-  //     setMovieList(movieList);
-  //   } else page--;
-  //   getNowPlaying();
-  //   setMovieList(movieList);
-  // };
   const searchByKeyword = (e) => {
-    let newList = [];
+    // let newList = [];
     searchContents = e.target.value;
     console.log("user typing: ", searchContents);
     if (searchContents === "") {
-      setMovieList(movieList);
+      getNowPlaying();
     } else {
-      newList = movieList.filter((movie) => {
-        movie.title.toLowerCase().includes(searchContents.toLowerCase());
-      });
+     setMovieList(movieList.filter((movie) => {
+      return movie.title.toLowerCase().includes(searchContents.toLowerCase());
+      }));
     }
-    setMovieList(newList);
+    // console.log("hehe", newList);
+    console.log("hehehhhhhhhhh", searchContents);
+    // setMovieList(newList);
   };
 
   useEffect(() => {
@@ -251,7 +233,7 @@ export default function App() {
         <div>
           {" "}
           <Navbar
-            className="navBox ml-5 font-weight-bolder"
+            className="fixed-top navBox ml-5 font-weight-bolder"
             expand="lg"
             variant="light"
             bg="danger"
@@ -261,7 +243,12 @@ export default function App() {
                 1++ EPISODE
               </Navbar.Brand>
               <NavItem>
-                {" "}
+                {/* <InputRange
+                  maxValue={20}
+                  minValue={0}
+                  value={value}
+                  onChange={(value) => setValue({ value })}
+                /> */}
                 <Form inline>
                   <FormControl
                     onChange={(e) => searchByKeyword(e)}
@@ -276,52 +263,9 @@ export default function App() {
           </Navbar>{" "}
         </div>
 
-        <div className="listRow ml-5 mr-0">
-          <MovieList
-            openModal={openModal}
-            genresListApp={genreList}
-            movieList={movieList}
-          />
+        <div className="listRow ml-5 mr-0 mt-5">
+          <MovieList genresListApp={genreList} movieList={movieList} />
         </div>
-        <ReactModal
-          className="ml-5"
-          style={{
-            overlay: {
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "black",
-            },
-            content: {
-              position: "absolute",
-              top: "40px",
-              left: "40px",
-              right: "40px",
-              bottom: "0px",
-              border: "1px solid #000",
-              background: "#000",
-              overflow: "auto",
-              WebkitOverflowScrolling: "touch",
-              borderRadius: "4px",
-              outline: "none",
-              padding: "0px",
-            },
-          }}
-          isOpen={modalOpen}
-        >
-          <YouTube width="100%" height="85%" video="x2to0hs" autoplay />
-          <Button
-            className="float-right"
-            variant="outline-danger"
-            onClick={() => {
-              closeModal();
-            }}
-          >
-            x
-          </Button>
-        </ReactModal>
         <div className="paginationLine">
           <Pagination
             className="pagination"
