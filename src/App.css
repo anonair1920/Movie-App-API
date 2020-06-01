@@ -39,19 +39,19 @@ body {
 .imgSize:hover .hiddenContent {
   opacity: 1;
 }
-.imgSize:hover .hoverImg{
+.imgSize:hover .hoverImg {
   opacity: 0.1;
 }
 .imgSize:hover .imgSize {
   opacity: 0.1;
 }
-.imgSize:hover .cardbody{
+.imgSize:hover .cardbody {
   opacity: 0;
 }
 .hiddenContent {
   opacity: 0;
   display: inline-block;
-  align-items: center ;
+  align-items: center;
 }
 
 .listRow {
@@ -59,13 +59,38 @@ body {
   justify-content: center;
   align-items: center;
 }
-.Pagination{
-  background-color: black;
-  color: whitesmoke;
-  border: 1px solid white;
-}
-.pagiBox{
+
+.paginationLine {
   display: flex;
   justify-content: center;
 }
 
+.pagination > li > a {
+  background-color: black;
+  color: white;
+  border-style: none;
+}
+.pagination > li {
+  background-color: black;
+  color: white;
+  border-style: none;
+}
+/* .pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus
+.pagination > li > span:hover
+ {
+  color: white;
+  background-color: pink;
+  border-style: none;
+} */
+
+.sideBar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  transition: 0.5s;
+}
+.navBox{
+  background-color: white;
+}

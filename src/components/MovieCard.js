@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, ListGroupItem, ListGroup, Badge } from "react-bootstrap";
+import { Card, Badge, Button } from "react-bootstrap";
 
 export default function MovieCard(props) {
   let movie = props.movie;
@@ -30,6 +30,7 @@ export default function MovieCard(props) {
 
         <Card.Body className='cardbody'>
           <Card.Title >{movie.title}</Card.Title>
+          <Button onClick={()=>{props.openModal()}}>Trailer</Button>
         </Card.Body>
       </Card>
       {/* <Card style={{ width: "18rem" }}>
