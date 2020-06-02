@@ -46,6 +46,37 @@ body {
 .imgSize:hover .imgSize {
   opacity: 0.1;
 }
+.imgSize:hover {
+  border: 1px solid darkgrey;
+  border-bottom: none;
+  box-shadow: 1px 1px 0px 0px darkgrey;
+}
+
+.pagination > li.active > a {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+.pagination > li > a:hover {
+  background-color: #218838;
+  color: white;
+}
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  margin-left: 0;
+  padding: 0px;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+  display: none !important;
+}
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  border-bottom-right-radius: 4px;
+  margin-right: 0;
+  padding: 0px !important;
+  border-top-right-radius: 4px;
+  display: none !important;
+}
 .imgSize:hover .cardbody {
   opacity: 0;
 }
@@ -59,6 +90,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.modalBox {
+  width: 100%;
+  height: 100%;
 }
 
 .paginationLine {
@@ -83,11 +119,11 @@ body {
   transition: opacity 1500ms ease-in-out;
 }
 
-.ReactModal__Overlay--after-open{
+.ReactModal__Overlay--after-open {
   opacity: 1;
 }
 
-.ReactModal__Overlay--before-close{
+.ReactModal__Overlay--before-close {
   opacity: 0;
 }
 
@@ -97,6 +133,16 @@ body {
   top: 0;
   transition: 0.5s;
 }
-.navBox{
+.navBox {
   background-color: white;
+}
+
+.description {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  /* number of lines to show */
+  -webkit-box-orient: vertical;
 }

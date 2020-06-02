@@ -91,13 +91,14 @@ export default function App() {
     if (searchContents === "") {
       getNowPlaying();
     } else {
-     setMovieList(movieList.filter((movie) => {
-      return movie.title.toLowerCase().includes(searchContents.toLowerCase());
-      }));
+      setMovieList(
+        movieList.filter((movie) => {
+          return movie.title
+            .toLowerCase()
+            .includes(searchContents.toLowerCase());
+        })
+      );
     }
-    // console.log("hehe", newList);
-    console.log("hehehhhhhhhhh", searchContents);
-    // setMovieList(newList);
   };
 
   useEffect(() => {

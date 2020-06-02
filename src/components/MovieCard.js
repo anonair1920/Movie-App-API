@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Card, Badge, Button } from "react-bootstrap";
+import { Card, Badge, Button, ImgOverlay, CardDeck } from "react-bootstrap";
 import ReactModal from "react-modal";
 import YouTube from "@u-wave/react-youtube";
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 const apiKey = process.env.REACT_APP_APIKEY;
 
 export default function MovieCard(props) {
@@ -13,7 +13,6 @@ export default function MovieCard(props) {
   let [discriptionOpen, setDiscriptionOpen] = useState(false);
   let [modalOpen, setModalOpen] = useState(false);
   let [id, setId] = useState(null);
-
 
   const showDiscription = () => {};
 
@@ -34,7 +33,7 @@ export default function MovieCard(props) {
   };
 
   return (
-    <div className="">
+    <div className="mt-5">
       <Card className="mt-5 container imgSize titleLine">
         <Card.Img
           className="hoverImg"
@@ -43,9 +42,8 @@ export default function MovieCard(props) {
           src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`}
         />
 
-        <Card.ImgOverlay className="hiddenContent">
+        <Card.ImgOverlay className="hiddenContent pb-0">
           <Card.Title className="font-weight-bolder">{movie.title}</Card.Title>
-
           <Card.Text className="font-weight-lighter">
             {movie.genre_ids.map((id) => {
               let test = genres.find((genre) => {
@@ -59,21 +57,24 @@ export default function MovieCard(props) {
               );
             })}
           </Card.Text>
+          <Card.Text className='description'>
+          {movie.overview}
+          </Card.Text>
+        </Card.ImgOverlay>
 
-          <Card.Text data-spy="scroll">
-            {movie.vote_average}{" "}
+        <Card.Body>
+          <div className="d-flex justify-content-around align-baseline">
+            {" "}
             <Box component="fieldset" mb={3} borderColor="transparent">
-              <Typography component="legend">Read only</Typography>
+              {/* <Typography component="legend">Read only</Typography> */}
               <Rating
                 name="read-only"
                 value={movie.vote_average / 2}
                 readOnly
               />
             </Box>
-          </Card.Text>
-        </Card.ImgOverlay>
-
-        <Card.Body>
+            <Card.Text data-spy="scroll"> {movie.vote_average / 2} </Card.Text>
+          </div>
           {/* <Card.Title className="cardbody">{movie.title}</Card.Title> */}
           <Button
             className="float-left"
@@ -123,26 +124,39 @@ export default function MovieCard(props) {
         }}
         isOpen={modalOpen}
       >
-        <YouTube width="100%" height="85%" video={id} autoplay />
-
-        <Button
-          className="float-right"
-          variant="outline-danger"
-          onClick={() => {
-            closeModal();
-          }}
-        >
-          x
-        </Button>
-        <Button
-          className="float-right"
-          variant="outline-danger"
-          onClick={() => {
-            console.log("let's watch movies");
-          }}
-        >
-          Watch
-        </Button>
+        <div className="d-flex align-baseline modalBox">
+          <YouTube
+            width="100%"
+            height="85%"
+            className="col-9"
+            video={id}
+            autoplay
+          />
+          <div className="col-3 align-baseline">
+            {" "}
+            <div className="align-bottom">
+              <Button
+                pointer-events="none"
+                className="float-right"
+                variant="outline-danger"
+                onClick={() => {
+                  closeModal();
+                }}
+              >
+                x
+              </Button>
+              <Button
+                className="float-right mr-3"
+                variant="outline-danger"
+                onClick={() => {
+                  console.log("let's watch movies");
+                }}
+              >
+                Watch
+              </Button>
+            </div>
+          </div>
+        </div>
       </ReactModal>
     </div>
   );
